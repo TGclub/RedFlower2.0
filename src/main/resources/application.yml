@@ -1,0 +1,29 @@
+# 通用配置
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/redflower?useUnicode=true&amp;characterEncoding=UTF-8
+    username: redflower
+    password: redflower
+  jpa:
+    hibernate:
+      ddl-auto: create
+    show-sql: true
+
+wx:
+  appid:
+  secret:
+  url: https://api.weixin.qq.com/sns/jscode2session?appid=${wx.appid}&secret=${wx.secret}&grant_type=authorization_code&js_code=
+
+
+server:
+  port: 8080
+logging:
+  level:
+    org.springframework.web: error
+    com.weizhi: debug
+  pattern:
+    console: "[%-5level] %d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+    file: "[%-5level] %d{yyyy-MM-dd HH:mm:ss} [%thread] %logger{36} - %msg%n"
+  file: redflower.log

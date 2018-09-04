@@ -3,12 +3,12 @@ spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/redflower?useUnicode=true&amp;characterEncoding=UTF-8
-    username: redflower
-    password: redflower
+    url: jdbc:mysql://127.0.0.1:3306/redflower?useUnicode=true&amp;characterEncoding=UTF-8&useSSL=false
+    username: root
+    password: xiaohu2815
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     show-sql: true
 
 wx:
@@ -21,9 +21,12 @@ server:
   port: 8080
 logging:
   level:
-    org.springframework.web: error
-    com.weizhi: debug
+    org.springframework.web: warn
+    com.weizhi: warn
   pattern:
+    # 格式化
     console: "[%-5level] %d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+    # 日志文件名
     file: "[%-5level] %d{yyyy-MM-dd HH:mm:ss} [%thread] %logger{36} - %msg%n"
+    # 会在当前路径保存
   file: redflower.log

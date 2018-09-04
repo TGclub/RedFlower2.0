@@ -5,8 +5,10 @@ import com.weizhi.redflower.pojo.entity.User;
 import com.weizhi.redflower.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 @Component
+@Service
 public class UserServiceImpl implements UserService{
     private final UserDao userDao;
 
@@ -30,7 +32,7 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public User getUserById(Integer id) {
+    public User getUserById(String id) {
         return userDao.findById(id).get();
     }
 }

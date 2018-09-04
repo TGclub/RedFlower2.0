@@ -14,5 +14,5 @@ public interface UserDao extends JpaRepository<User, Integer>{
      * @param id
      * @return
      */
-    User getUserById(Integer id);
+    User getUserById(String id);
 }

@@ -29,5 +29,5 @@ public interface UserService {
      * @param id
      * @return
      */
-    User getUserById(Integer id);
+    User getUserById(String id);
 }

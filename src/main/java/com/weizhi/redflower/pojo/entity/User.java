@@ -1,5 +1,7 @@
 package com.weizhi.redflower.pojo.entity;
 
+import com.weizhi.redflower.enums.UserInfoStateEnum;
+
 import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
@@ -9,7 +11,7 @@ import javax.validation.constraints.NotNull;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private String id;
 
     private String name;
 
@@ -21,11 +23,21 @@ public class User {
 
     private String openid;
 
-    public Integer getId() {
+    public Integer getState() {
+        return state;
+    }
+
+    public void setState(Integer state) {
+        this.state = state;
+    }
+
+    private Integer state = UserInfoStateEnum.INCOMPLETED.getState();  //默认用户信息未完善
+
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 

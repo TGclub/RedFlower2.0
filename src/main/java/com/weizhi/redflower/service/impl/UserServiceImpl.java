@@ -26,13 +26,17 @@ public class UserServiceImpl implements UserService{
         return user;
     }
 
+    /**
+     * 更新完善个人信息
+     * @param user 修改后的user
+     */
     @Override
     public void update(User user) {
         userDao.save(user);
     }
 
     @Override
-    public User getUserById(String id) {
+    public User getUserById(Integer id) {
         return userDao.findById(id).get();
     }
 }

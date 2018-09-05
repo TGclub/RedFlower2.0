@@ -11,7 +11,7 @@ import javax.validation.constraints.NotNull;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id;
+    private Integer id;
 
     private String name;
 
@@ -33,11 +33,11 @@ public class User {
 
     private Integer state = UserInfoStateEnum.INCOMPLETED.getState();  //默认用户信息未完善
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

@@ -49,8 +49,11 @@ public class UserController {
          * 登录成功后将userId保存在session域中
          */
         session.setAttribute("userId",user.getId());
+        /**
+         *  一个用户对应一个唯一的sessionId
+         */
         Map<String, Object> userMap = new HashMap<>();
-        userMap.put("user",user);
+        userMap.put("sessionId",session.getId());
 
         /**
          * 用户信息是否完善
@@ -63,8 +66,6 @@ public class UserController {
             return ResponseDto.succeed("login in successfully",userMap);
         }
 
-        return ResponseDto.succeed("login in successfully",userMap)
-
     }
 
 
@@ -74,12 +75,9 @@ public class UserController {
      * @return
      */
     @RequestMapping(value = "/userInfo",method = RequestMethod.GET)
-    public ResponseDto getUserInfo(HttpSession session){
-        String userId =  session.getId();
+    public ResponseDto getUserInfo(HttpSession session) throws UserInfoException{
+        Integer userId =  (Integer) session.getAttribute("userId");
         User user = userService.getUserById(userId);
-        if (user.getDefinition().length()>10){
-            new UserInfoException("自定义信息长度不多于10个字符！");
-        }
         ProfileDto userInfo =  new ProfileDto(user.getName(),user.getDefinition(),user.getWxid());
         return ResponseDto.succeed("userInfo",userInfo);
     }
@@ -93,5 +91,29 @@ public class UserController {
     public ResponseDto logout(HttpSession session) {
         session.invalidate();
         return ResponseDto.succeed();
+    }
+
+
+    /**
+     * 完善修改个人信息
+     * @param user  表单自动生成的user
+     * @param session
+     * @return
+     */
+
+    @RequestMapping(value = "/update",method = RequestMethod.PUT)
+    public ResponseDto update(@RequestBody User user,
+                              HttpSession session){
+        Integer userId = (Integer) session.getAttribute("userId");
+        User uuser = userService.getUserById(userId);
+        user.setId(uuser.getId());
+        user.setOpenid(uuser.getOpenid());
+        if (user.getDefinition().length()>10){
+            return ResponseDto.failed("自定义信息长度不多于10个字符！");
+        }
+        user.setState(UserInfoStateEnum.COMPLETED.getState());
+        userService.update(user);
+        return ResponseDto.succeed();
+
     }
 }

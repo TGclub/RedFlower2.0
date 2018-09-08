@@ -1,12 +1,15 @@
 package com.weizhi.redflower.util;
 
 import com.weizhi.redflower.exception.handler.NoAuthenticationException;
+import com.weizhi.redflower.pojo.dto.WeChatResponseDto;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import java.net.URLEncoder;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 微信工具类
@@ -25,15 +28,16 @@ public class WechatUtil {
      * @return  openid
      * @throws Exception  请求失败
      */
-    public String getOpenId(String code) throws Exception {
+    public WeChatResponseDto getOpenIdAndSessionKey(String code) throws Exception {
         String url = WECHAT_OPENID_URL + URLEncoder.encode(code, "UTF-8");
         ResponseEntity<String> result = restTemplate.getForEntity(url, String.class);
         if (result.getStatusCodeValue() != 200) {
             throw new NoAuthenticationException("connect wechat failed");
         }
 
-        WechatResponseBody responseBody = JsonUtil.json2Object(result.getBody(), WechatResponseBody.class);
-        return responseBody.getOpenid();
+        WechatResponseBody wechatResponseBody = JsonUtil.json2Object(result.getBody(), WechatResponseBody.class);
+        WeChatResponseDto weChatResponseDto = new WeChatResponseDto(wechatResponseBody.getOpenid(),wechatResponseBody.getSession_key());
+        return weChatResponseDto;
     }
 }
 

@@ -13,7 +13,7 @@ public interface UserService {
      * @param code 前台给的code
      * @return User Entity
      */
-    User login(String code);
+    User login(String openid,String encryptedData,String sessionKey,String iv);
 
     /**
      * 对用户信息进行更新

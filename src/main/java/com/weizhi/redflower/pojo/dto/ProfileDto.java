@@ -8,12 +8,23 @@ public class ProfileDto {
 
     private String wx;
 
+    private String avatarUrl;
+
+    public String getAvatarUrl() {
+        return avatarUrl;
+    }
+
+    public void setAvatarUrl(String avatarUrl) {
+        this.avatarUrl = avatarUrl;
+    }
+
     public ProfileDto(){}
 
-    public ProfileDto(String name,String definition,String wx){
+    public ProfileDto(String name,String definition,String wx,String avatarUrl){
         this.name = name;
         this.definition = definition;
         this.wx = wx;
+        this.avatarUrl = avatarUrl;
     }
 
     public String getDefinition() {

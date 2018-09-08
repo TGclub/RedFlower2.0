@@ -1,10 +1,6 @@
 package com.weizhi.redflower.pojo.entity;
 
-import com.weizhi.redflower.enums.UserInfoStateEnum;
-
 import javax.persistence.*;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "user")
@@ -22,6 +18,26 @@ public class User {
     private String wxid;
 
     private String openid;
+
+    private String sessionKey;
+
+    private String avatarUrl;
+
+    public String getSessionKey() {
+        return sessionKey;
+    }
+
+    public void setSessionKey(String sessionKey) {
+        this.sessionKey = sessionKey;
+    }
+
+    public String getAvatarUrl() {
+        return avatarUrl;
+    }
+
+    public void setAvatarUrl(String avatarUrl) {
+        this.avatarUrl = avatarUrl;
+    }
 
     public Integer getState() {
         return state;

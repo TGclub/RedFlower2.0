@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface NetworkDao extends JpaRepository<Network,Integer> {
+
+    Network getNetworkById(Integer id);
 }

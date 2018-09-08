@@ -39,16 +39,6 @@ public class User {
         this.avatarUrl = avatarUrl;
     }
 
-    public Integer getState() {
-        return state;
-    }
-
-    public void setState(Integer state) {
-        this.state = state;
-    }
-
-    private Integer state = UserInfoStateEnum.INCOMPLETED.getState();  //默认用户信息未完善
-
     public Integer getId() {
         return id;
     }

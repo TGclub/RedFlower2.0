@@ -29,6 +29,7 @@ public class UserServiceImpl implements UserService{
                 JSONObject userInfoJSON = JSONObject.parseObject(result);
                 if (user == null) {
                     user = new User();
+                    user.setGender(Integer.parseInt(userInfoJSON.getString("gender")));
                     user.setOpenid(openid);
                     user.setSessionKey(sessionkey);
                     user.setAvatarUrl(userInfoJSON.getString("avatarUrl"));

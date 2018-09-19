@@ -33,7 +33,7 @@ public class NetworkController {
      * 创建新的人脉圈
      * @Param name
      */
-    @RequestMapping(value = "/name",method = RequestMethod.POST)
+    @RequestMapping(value = "/addNetwork",method = RequestMethod.POST)
     public ResponseDto AddNetwork(@RequestParam("name")String name, HttpSession httpSession){
 
         Integer userId = (Integer)httpSession.getAttribute("userId");

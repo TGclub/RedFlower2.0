@@ -1,12 +1,17 @@
 package com.weizhi.redflower.web.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.weizhi.redflower.enums.InfoStatusEnum;
+import com.weizhi.redflower.pojo.dto.InfoDto;
 import com.weizhi.redflower.pojo.dto.ResponseDto;
+import com.weizhi.redflower.pojo.entity.Intimacy;
 import com.weizhi.redflower.pojo.entity.Network;
+import com.weizhi.redflower.pojo.entity.User;
 import com.weizhi.redflower.pojo.entity.UserNetwork;
+import com.weizhi.redflower.service.IntimacyService;
 import com.weizhi.redflower.service.NetworkService;
 import com.weizhi.redflower.service.UserNetworkService;
-import org.omg.CORBA.INTERNAL;
+import com.weizhi.redflower.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -23,10 +28,16 @@ public class NetworkController {
 
     private UserNetworkService userNetworkService;
 
+    private UserService userService;
+
+    private IntimacyService intimacyService;
+
     @Autowired
-    public NetworkController(NetworkService networkService,UserNetworkService userNetworkService){
+    public NetworkController(NetworkService networkService,UserNetworkService userNetworkService,UserService userService,IntimacyService intimacyService){
         this.networkService = networkService;
         this.userNetworkService = userNetworkService;
+        this.userService = userService;
+        this.intimacyService = intimacyService;
     }
 
     /**
@@ -95,5 +106,38 @@ public class NetworkController {
         }
 
         return ResponseDto.succeed("query successfully",response);
+    }
+
+    /**
+     * 人脉网界面个人信息
+     * @param uid1
+     * @param uid2
+     */
+    @RequestMapping(value = "info",method = RequestMethod.POST)
+    public ResponseDto info(@RequestParam("uid1")Integer uid1,
+                            @RequestParam("uid2")Integer uid2,
+                            HttpSession httpSession){
+        Integer userId = (Integer)httpSession.getAttribute("userId");
+        if (userId == null){
+            return ResponseDto.failed("no login");
+        }
+
+        User user = userService.getUserById(uid1);
+        if (user == null){
+            return ResponseDto.failed("uid1 is not exist");
+        }
+
+        Intimacy intimacy = intimacyService.getIntimacyByUid1AndUid2(uid1,uid2);
+        if(intimacy == null){
+            return ResponseDto.failed("no connection");
+        }
+
+        if(intimacy.getValue() < InfoStatusEnum.rank.getValue()){
+            InfoDto infoDto = new InfoDto(uid1,user.getName(),user.getGender(),user.getDefinition(),InfoStatusEnum.LOW.getValue(),user.getWxid());
+            return ResponseDto.succeed("succeed",infoDto);
+        }
+        else{
+            return ResponseDto.succeed("succeed",new InfoDto(uid1,user.getName(),user.getGender(),user.getDefinition(),InfoStatusEnum.HIGH.getValue(),user.getWxid()));
+        }
     }
 }

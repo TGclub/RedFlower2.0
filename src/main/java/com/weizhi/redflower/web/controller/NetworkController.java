@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/network")
@@ -140,4 +142,32 @@ public class NetworkController {
             return ResponseDto.succeed("succeed",new InfoDto(uid1,user.getName(),user.getGender(),user.getDefinition(),InfoStatusEnum.HIGH.getValue(),user.getWxid()));
         }
     }
+
+    /**
+     *
+     * @param userId
+     * @return
+     */
+    @RequestMapping(value = "/image",method = RequestMethod.GET)
+    public ResponseDto getDifferentUser(@RequestParam("userId") Integer userId){
+        List<Network> networkList = new ArrayList<>();
+        List<UserNetwork> userNetworkList =userNetworkService.getUserNetworksByUid(userId);
+        if (userNetworkList.isEmpty()){
+            return ResponseDto.failed("you not have other network");
+        }else {
+            List<Integer> nids = new ArrayList<>();
+            for (int i =0;i<userNetworkList.size();i++){
+                nids.add(userNetworkList.get(i).getNid());
+            }
+            for (int i = 0; i < nids.size() ; i++) {
+                networkList = networkService.getNetworkByNid(nids.get(i));
+            }
+            if (networkList.isEmpty()){
+                return ResponseDto.failed("get wrong");
+            }else {
+                return ResponseDto.succeed("success",networkList);
+            }
+        }
+    }
+
 }

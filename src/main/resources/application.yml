@@ -12,8 +12,8 @@ spring:
     show-sql: true
 
 wx:
-  appid:
-  secret:
+  appid: wx67618f9dbb31145d
+  secret: 590424b0f1edfe7244d38421fec3b72b
   url: https://api.weixin.qq.com/sns/jscode2session?appid=${wx.appid}&secret=${wx.secret}&grant_type=authorization_code&js_code=
 
 

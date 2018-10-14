@@ -34,7 +34,7 @@ public class NetworkController {
 
     private IntimacyService intimacyService;
 
-    @Autowired
+
     public NetworkController(NetworkService networkService, UserNetworkService userNetworkService, UserService userService, IntimacyService intimacyService) {
         this.networkService = networkService;
         this.userNetworkService = userNetworkService;

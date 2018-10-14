@@ -5,13 +5,15 @@ import com.weizhi.redflower.dao.NetworkDao;
 import com.weizhi.redflower.service.NetworkService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
+import javax.jws.WebService;
 import java.util.List;
 
-@Component
+@Service
 public class NetworkServiceImpl implements NetworkService {
 
-    private final NetworkDao networkDao;
+    private NetworkDao networkDao;
 
     @Autowired
     public NetworkServiceImpl(NetworkDao networkDao){this.networkDao = networkDao;}

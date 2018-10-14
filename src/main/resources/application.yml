@@ -5,7 +5,7 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://127.0.0.1:3306/redflower?useUnicode=true&amp;characterEncoding=UTF-8&useSSL=false
     username: root
-    password: xiaohu2815
+    password: whalexhh
   jpa:
     hibernate:
       ddl-auto: update
@@ -18,7 +18,7 @@ wx:
 
 
 server:
-  port: 8080
+  port: 8091
 logging:
   level:
     org.springframework.web: warn
